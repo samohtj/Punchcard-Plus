@@ -1,7 +1,10 @@
 package punchcard.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -9,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 import punchcard.Workday;
@@ -26,19 +30,27 @@ public class PuncherPanel extends JPanel {
 	
 	JTable tblWorkdays;
 	
+	ArrayList<Workday> workdays = new ArrayList<>();
+	
 	Workday workdayStaging = null;
 	
 	/**
 	 * Create a new PuncherPanel.
 	 */
 	public PuncherPanel() {
-
-		add(btnPunchIn);
-		add(btnPunchOut);
+		this.setLayout(new BorderLayout());
+		
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.add(btnPunchIn);
+		buttonsPanel.add(btnPunchOut);
+		this.add(buttonsPanel, BorderLayout.SOUTH);
+		
 		tblWorkdays = new JTable(new WorkdayTableModel());
-		JScrollPane workdayPane = new JScrollPane();
-		workdayPane.add(tblWorkdays);
-		add(workdayPane);
+		tblWorkdays.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        tblWorkdays.setFillsViewportHeight(true);
+		JScrollPane workdayPane = new JScrollPane(tblWorkdays);
+		//workdayPane.add(tblWorkdays);
+		this.add(workdayPane, BorderLayout.CENTER);
 		
 		// Disable the punch out button. This assumes that you aren't currently punched in.
 		btnPunchOut.setEnabled(false);
@@ -52,7 +64,8 @@ public class PuncherPanel extends JPanel {
 	 * @param workday
 	 */
 	public void addWorkday(Workday workday) {
-		DefaultTableModel model = (DefaultTableModel) tblWorkdays.getModel();
+		workdays.add(workday);
+		WorkdayTableModel model = (WorkdayTableModel) tblWorkdays.getModel();
 		String day = "date";
 		String start = "starttime";
 		String end = "endtime";
@@ -64,33 +77,18 @@ public class PuncherPanel extends JPanel {
 	 * @author Jonathan Thomas
 	 *
 	 */
-	private class WorkdayTableModel extends DefaultTableModel {
+	private class WorkdayTableModel extends AbstractTableModel {
 		private static final long serialVersionUID = 4060693810634100465L;
 
 		/**
 		 * Array of column names.
 		 */
-		private String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
+		private String[] columnNames = {"Date", "Start Time", "End Time"};
 		
 		/**
 		 * Array of data.
 		 */
-private Object[][] data = {
-{"Kathy", "Smith",
-"Snowboarding", new Integer(5), new Boolean(false)},
-{"John", "Doe",
-"Rowing", new Integer(3), new Boolean(true)},
-{"Sue", "Black",
-"Knitting", new Integer(2), new Boolean(false)},
-{"Jane", "White",
-"Speed reading", new Integer(20), new Boolean(true)},
-{"Joe", "Brown",
-"Pool", new Integer(10), new Boolean(false)}
-};
+		private ArrayList<Object[]> data = new ArrayList<>();
 		
 		/**
 		 * Return the number of columns in the model.
@@ -105,7 +103,7 @@ private Object[][] data = {
 		 * @return int quantity of rows.
 		 */
         public int getRowCount() {
-        	return data.length;
+        	return data.size();
         }
 
         /**
@@ -121,7 +119,24 @@ private Object[][] data = {
          * @return Object representing whatever it was.
          */
         public Object getValueAt(int row, int col) {
-            return data[row][col];
+            return data.get(row)[col];
+        }
+        
+        public void setValueAt(Object value, int row, int col) {
+            System.out.println("Setting the value at (" + row + ", " + col + ") to " + value);
+        	data.get(row)[col] = value;
+            fireTableCellUpdated(row, col);
+        }
+        
+        public Class<?> getColumnClass(int c) {
+            return getValueAt(0, c).getClass();
+        }
+        
+        public void addRow(Object[] row) {
+        	data.add(row);
+        	for(int i = 0; i < row.length; i++) {
+        		setValueAt(row[i], data.size() - 1, i);
+        	}
         }
 	}
 	
@@ -134,7 +149,7 @@ private Object[][] data = {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Punching in!");
+			//System.out.println("Punching in!");
 			// Once this button has been pressed, disable it and enable the opposite button
 			btnPunchIn.setEnabled(false);
 			btnPunchOut.setEnabled(true);
@@ -154,7 +169,8 @@ private Object[][] data = {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Punchin out!");
+			//System.out.println("Punchin out!");
+			
 			// Once this button has been pressed, disable it and enable the opposite button
 			btnPunchIn.setEnabled(true);
 			btnPunchOut.setEnabled(false);
@@ -164,6 +180,17 @@ private Object[][] data = {
 				workdayStaging.setEnd(new Date());
 				addWorkday(workdayStaging);
 			}
+			
+			//printArray();
+		}
+	}
+	
+	/**
+	 * Print the contents of {@code workdays} to the console.
+	 */
+	private void printArray() {
+		for (Workday day: workdays) {
+			System.out.println(day.getBegin() + " - " + day.getEnd());
 		}
 	}
 	
@@ -173,7 +200,8 @@ private Object[][] data = {
 		frame.add(new PuncherPanel());
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
+		//frame.pack();
+		frame.setSize(500, 500);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
