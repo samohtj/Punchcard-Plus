@@ -5,16 +5,13 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
-
+import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-
 import punchcard.Workday;
 
 /**
@@ -155,7 +152,7 @@ public class PuncherPanel extends JPanel {
 			
 			// Create a new workday, with right now as the starting point
 			workdayStaging = new Workday();
-			workdayStaging.setBegin(new Date());
+			workdayStaging.setBegin(Calendar.getInstance());
 		}
 	}
 	
@@ -176,7 +173,7 @@ public class PuncherPanel extends JPanel {
 			
 			// If the workdayStaging object isn't empty, set the ending point to right now
 			if (workdayStaging != null) {
-				workdayStaging.setEnd(new Date());
+				workdayStaging.setEnd(Calendar.getInstance());
 				addWorkday(workdayStaging);
 			}
 			
@@ -187,6 +184,7 @@ public class PuncherPanel extends JPanel {
 	/**
 	 * Print the contents of {@code workdays} to the console.
 	 */
+	@SuppressWarnings("unused")
 	private void printArray() {
 		for (Workday day: workdays) {
 			System.out.println(day.getBegin() + " - " + day.getEnd());
