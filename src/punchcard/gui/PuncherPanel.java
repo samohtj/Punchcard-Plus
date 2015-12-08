@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -62,10 +64,33 @@ public class PuncherPanel extends JPanel {
 	public void addWorkday(Workday workday) {
 		workdays.add(workday);
 		WorkdayTableModel model = (WorkdayTableModel) tblWorkdays.getModel();
-		String day = "date";
-		String start = "starttime";
-		String end = "endtime";
-		model.addRow(new Object[] {day, start, end});
+		
+		String day 		= getDateString(workday.getBegin());
+		String start 	= getTimeString(workday.getBegin());
+		String end 		= getTimeString(workday.getEnd());
+		String duration = getDurationString(workday.getBegin(), workday.getEnd());
+		
+		model.addRow(new Object[] {day, start, end, duration});
+	}
+	
+	private String getDateString(Calendar date) {
+		return date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
+				+ " " + date.get(Calendar.DATE) + ", "
+				+ date.get(Calendar.YEAR);
+	}
+	
+	private String getTimeString(Calendar date) {
+		return date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE)
+			+ ":" + date.get(Calendar.SECOND);
+	}
+	
+	private String getDurationString(Calendar start, Calendar end) {
+		long diff = end.getTime().getTime() - start.getTime().getTime();
+		long seconds = diff / 1000 % 60;
+		long minutes = diff / (1000 * 60) % 60;
+		long hours = diff / (1000 * 60 * 60);
+		
+		return hours + ":" + minutes + ":" + seconds;
 	}
 	
 	/**
@@ -79,7 +104,7 @@ public class PuncherPanel extends JPanel {
 		/**
 		 * Array of column names.
 		 */
-		private String[] columnNames = {"Date", "Start Time", "End Time"};
+		private String[] columnNames = {"Date", "Start Time", "End Time", "Duration"};
 		
 		/**
 		 * Array of data.
@@ -119,7 +144,7 @@ public class PuncherPanel extends JPanel {
         }
         
         public void setValueAt(Object value, int row, int col) {
-            System.out.println("Setting the value at (" + row + ", " + col + ") to " + value);
+            //System.out.println("Setting the value at (" + row + ", " + col + ") to " + value);
         	data.get(row)[col] = value;
             fireTableCellUpdated(row, col);
         }
