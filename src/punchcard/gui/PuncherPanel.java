@@ -49,7 +49,6 @@ public class PuncherPanel extends JPanel {
 		tblWorkdays.setPreferredScrollableViewportSize(new Dimension(500, 70));
         tblWorkdays.setFillsViewportHeight(true);
 		JScrollPane workdayPane = new JScrollPane(tblWorkdays);
-		//workdayPane.add(tblWorkdays);
 		this.add(workdayPane, BorderLayout.CENTER);
 		
 		// Disable the punch out button. This assumes that you aren't currently punched in.
