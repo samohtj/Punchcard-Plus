@@ -1,8 +1,10 @@
 package punchcard.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserProfile {
+public class UserProfile implements Serializable {
+	private static final long serialVersionUID = -4938056830808518961L;
 	
 	private String username;
 	private Password password;

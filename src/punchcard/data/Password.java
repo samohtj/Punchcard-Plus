@@ -1,6 +1,10 @@
 package punchcard.data;
 
-public class Password implements Comparable<Password>{
+import java.io.Serializable;
+
+public class Password implements Comparable<Password>, Serializable {
+	private static final long serialVersionUID = -4089526119855291717L;
+	
 	private char[] text;
 	
 	public Password(String text) {

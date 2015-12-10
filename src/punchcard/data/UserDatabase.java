@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserDatabase implements Serializable{
+public class UserDatabase implements Serializable {
 	
 	private static final long serialVersionUID = 5162598507212097174L;
 	

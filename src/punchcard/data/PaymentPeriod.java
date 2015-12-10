@@ -18,11 +18,13 @@
 
 package punchcard.data;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class PaymentPeriod {
+public class PaymentPeriod implements Serializable {
+	private static final long serialVersionUID = -5068081420841810501L;
 	
 	private Calendar startDate;
 	private Calendar endDate;

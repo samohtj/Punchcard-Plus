@@ -18,6 +18,7 @@
 
 package punchcard.data;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 /**
@@ -26,7 +27,9 @@ import java.util.Calendar;
  * @author Jonathan Thomas
  *
  */
-public class Workday implements Comparable<Workday>{
+public class Workday implements Comparable<Workday>, Serializable {
+	private static final long serialVersionUID = -491002784643578425L;
+	
 	private Calendar begin;
 	private Calendar end;
 	
