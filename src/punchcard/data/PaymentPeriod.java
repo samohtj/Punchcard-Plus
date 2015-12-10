@@ -29,6 +29,10 @@ public class PaymentPeriod {
 	
 	private LinkedList<Workday> workdays = new LinkedList<>();
 	
+	public PaymentPeriod() {
+		
+	}
+	
 	/**
 	 * Generate a new payment period from a list of workdays.
 	 * @param workdays
@@ -62,11 +66,26 @@ public class PaymentPeriod {
 	}
 	
 	private void insertWorkday(Workday day) {
-		int i = 0;
-		while (day.getBegin().before(workdays.get(i)) && i < workdays.size()) {
-			i++;
+		boolean DEBUG = true;
+		
+		if (workdays.size() == 0) {
+			workdays.add(day);
+			return;
 		}
-		workdays.add(i, day);
+		
+		for (int i = 0; i < workdays.size(); i++) {
+			if (DEBUG) {
+				System.out.println("Comparing:\n\t" 
+						+ "time to insert: " + day.getBegin().getTimeInMillis() + "\n\t"
+						+ "time comparing: " + workdays.get(i).getBegin().getTimeInMillis());
+			}
+			
+			if (day.getBegin().after(workdays.get(i))) {
+				workdays.add(i, day);
+			} else {
+				break;
+			}
+		}
 	}
 
 	/**
@@ -123,6 +142,34 @@ public class PaymentPeriod {
 	 */
 	public void setWorkdays(LinkedList<Workday> workdays) {
 		this.workdays = workdays;
+	}
+	
+	public void printAllWorkdays() {
+		System.out.println("Workdays:");
+		for (Workday day: workdays) {
+			System.out.println(day.toString());
+		}
+	}
+	
+	public static void main(String[] args) {
+		try {
+			System.out.println("Adding workdays, please wait.");
+			Workday day1 = new Workday(Calendar.getInstance(), Calendar.getInstance());
+			Thread.sleep(2000);
+			Workday day2 = new Workday(Calendar.getInstance(), Calendar.getInstance());
+			Thread.sleep(2000);
+			Workday day3 = new Workday(Calendar.getInstance(), Calendar.getInstance());
+			System.out.println("Done adding workdays.");
+			
+			PaymentPeriod period = new PaymentPeriod();
+			period.addWorkday(day1);
+			period.addWorkday(day2);
+			period.addWorkday(day3);
+			period.printAllWorkdays();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

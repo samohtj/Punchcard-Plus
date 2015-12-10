@@ -77,4 +77,13 @@ public class Workday {
 	public void setEnd(Calendar end) {
 		this.end = end;
 	}
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Workday:\n\t");
+		builder.append(begin.getTimeInMillis() + "\n\t");
+		builder.append(end.getTimeInMillis());
+		
+		return builder.toString();
+	}
 }
