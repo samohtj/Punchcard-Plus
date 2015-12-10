@@ -19,20 +19,13 @@
 package punchcard.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-
 import punchcard.data.Workday;
 
 /**
@@ -46,10 +39,7 @@ public class PuncherPanel extends JPanel {
 	private JButton btnPunchIn = new JButton("Punch In");
 	private JButton btnPunchOut = new JButton("Punch Out");
 	
-	JTable tblWorkdays;
-	
-	ArrayList<Workday> workdays = new ArrayList<>();
-	
+	WorkdayTablePane tablePane = new WorkdayTablePane();	
 	Workday workdayStaging = null;
 	
 	/**
@@ -63,121 +53,13 @@ public class PuncherPanel extends JPanel {
 		buttonsPanel.add(btnPunchOut);
 		this.add(buttonsPanel, BorderLayout.SOUTH);
 		
-		tblWorkdays = new JTable(new WorkdayTableModel());
-		tblWorkdays.setPreferredScrollableViewportSize(new Dimension(500, 70));
-        tblWorkdays.setFillsViewportHeight(true);
-		JScrollPane workdayPane = new JScrollPane(tblWorkdays);
-		this.add(workdayPane, BorderLayout.CENTER);
+		this.add(tablePane.getPane(), BorderLayout.CENTER);
 		
 		// Disable the punch out button. This assumes that you aren't currently punched in.
 		btnPunchOut.setEnabled(false);
 		
 		btnPunchIn.addActionListener(new PunchInListener());
 		btnPunchOut.addActionListener(new PunchOutListener());
-	}
-	
-	/**
-	 * Add a workday to the display table.
-	 * @param workday
-	 */
-	public void addWorkday(Workday workday) {
-		workdays.add(workday);
-		WorkdayTableModel model = (WorkdayTableModel) tblWorkdays.getModel();
-		
-		String day 		= getDateString(workday.getBegin());
-		String start 	= getTimeString(workday.getBegin());
-		String end 		= getTimeString(workday.getEnd());
-		String duration = getDurationString(workday.getBegin(), workday.getEnd());
-		
-		model.addRow(new Object[] {day, start, end, duration});
-	}
-	
-	private String getDateString(Calendar date) {
-		return date.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.US)
-				+ " " + date.get(Calendar.DATE) + ", "
-				+ date.get(Calendar.YEAR);
-	}
-	
-	private String getTimeString(Calendar date) {
-		return date.get(Calendar.HOUR_OF_DAY) + ":" + date.get(Calendar.MINUTE)
-			+ ":" + date.get(Calendar.SECOND);
-	}
-	
-	private String getDurationString(Calendar start, Calendar end) {
-		long diff = end.getTime().getTime() - start.getTime().getTime();
-		long seconds = diff / 1000 % 60;
-		long minutes = diff / (1000 * 60) % 60;
-		long hours = diff / (1000 * 60 * 60);
-		
-		return hours + ":" + minutes + ":" + seconds;
-	}
-	
-	/**
-	 * Custom model for the table displaying the workdays.
-	 * @author Jonathan Thomas
-	 *
-	 */
-	private class WorkdayTableModel extends AbstractTableModel {
-		private static final long serialVersionUID = 4060693810634100465L;
-
-		/**
-		 * Array of column names.
-		 */
-		private String[] columnNames = {"Date", "Start Time", "End Time", "Duration"};
-		
-		/**
-		 * Array of data.
-		 */
-		private ArrayList<Object[]> data = new ArrayList<>();
-		
-		/**
-		 * Return the number of columns in the model.
-		 * @return int quantity of columns.
-		 */
-		public int getColumnCount() {
-            return columnNames.length;
-        }
-
-		/**
-		 * Return the number of rows displayed by the model.
-		 * @return int quantity of rows.
-		 */
-        public int getRowCount() {
-        	return data.size();
-        }
-
-        /**
-         * Get the name of the specified column.
-         * @return String name.
-         */
-        public String getColumnName(int col) {
-            return columnNames[col];
-        }
-
-        /**
-         * Get the value stored at a certain position in the model.
-         * @return Object representing whatever it was.
-         */
-        public Object getValueAt(int row, int col) {
-            return data.get(row)[col];
-        }
-        
-        public void setValueAt(Object value, int row, int col) {
-            //System.out.println("Setting the value at (" + row + ", " + col + ") to " + value);
-        	data.get(row)[col] = value;
-            fireTableCellUpdated(row, col);
-        }
-        
-        public Class<?> getColumnClass(int c) {
-            return getValueAt(0, c).getClass();
-        }
-        
-        public void addRow(Object[] row) {
-        	data.add(row);
-        	for(int i = 0; i < row.length; i++) {
-        		setValueAt(row[i], data.size() - 1, i);
-        	}
-        }
 	}
 	
 	/**
@@ -218,23 +100,13 @@ public class PuncherPanel extends JPanel {
 			// If the workdayStaging object isn't empty, set the ending point to right now
 			if (workdayStaging != null) {
 				workdayStaging.setEnd(Calendar.getInstance());
-				addWorkday(workdayStaging);
+				tablePane.addWorkday(workdayStaging);
 			}
 			
 			//printArray();
 		}
 	}
-	
-	/**
-	 * Print the contents of {@code workdays} to the console.
-	 */
-	@SuppressWarnings("unused")
-	private void printArray() {
-		for (Workday day: workdays) {
-			System.out.println(day.getBegin() + " - " + day.getEnd());
-		}
-	}
-	
+
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		
