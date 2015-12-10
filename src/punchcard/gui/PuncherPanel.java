@@ -42,6 +42,8 @@ public class PuncherPanel extends JPanel {
 	WorkdayTablePane tablePane = new WorkdayTablePane();	
 	Workday workdayStaging = null;
 	
+	private boolean punchedIn = false;
+	
 	/**
 	 * Create a new PuncherPanel.
 	 */
@@ -55,11 +57,21 @@ public class PuncherPanel extends JPanel {
 		
 		this.add(tablePane.getPane(), BorderLayout.CENTER);
 		
-		// Disable the punch out button. This assumes that you aren't currently punched in.
-		btnPunchOut.setEnabled(false);
+		// Enable or disable the punch-in and punch-out buttons, depending on whether the user is 
+		// currently punched in.
+		btnPunchOut.setEnabled(punchedIn);
+		btnPunchIn.setEnabled(!punchedIn);
 		
 		btnPunchIn.addActionListener(new PunchInListener());
 		btnPunchOut.addActionListener(new PunchOutListener());
+	}
+	
+		/**
+	 * Whether the user is currently punched in in this frame.
+	 * @return boolean is punched in / isn't punched in.
+	 */
+	public boolean isPunchedIn() {
+		return punchedIn;
 	}
 	
 	/**
@@ -75,6 +87,8 @@ public class PuncherPanel extends JPanel {
 			// Once this button has been pressed, disable it and enable the opposite button
 			btnPunchIn.setEnabled(false);
 			btnPunchOut.setEnabled(true);
+			
+			punchedIn = true;
 			
 			// Create a new workday, with right now as the starting point
 			workdayStaging = new Workday();
@@ -96,6 +110,8 @@ public class PuncherPanel extends JPanel {
 			// Once this button has been pressed, disable it and enable the opposite button
 			btnPunchIn.setEnabled(true);
 			btnPunchOut.setEnabled(false);
+			
+			punchedIn = false;
 			
 			// If the workdayStaging object isn't empty, set the ending point to right now
 			if (workdayStaging != null) {
