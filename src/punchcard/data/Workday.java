@@ -26,7 +26,7 @@ import java.util.Calendar;
  * @author Jonathan Thomas
  *
  */
-public class Workday {
+public class Workday implements Comparable<Workday>{
 	private Calendar begin;
 	private Calendar end;
 	
@@ -78,6 +78,9 @@ public class Workday {
 		this.end = end;
 	}
 	
+	/**
+	 * Generate a String representation of this workday.
+	 */
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Workday:\n\t");
@@ -85,5 +88,22 @@ public class Workday {
 		builder.append(end.getTimeInMillis());
 		
 		return builder.toString();
+	}
+	
+	/**
+	 * Create an exact copy of this object.
+	 */
+	public Workday clone() {
+		return new Workday(this.begin, this.end);
+	}
+
+	/**
+	 * Compare this object to another.
+	 * @param Object to compare to.
+	 * @return Positive if greater than, negative if less than, zero if equal.
+	 */
+	@Override
+	public int compareTo(Workday o) {
+		return (int) (this.begin.getTimeInMillis() - o.getBegin().getTimeInMillis());
 	}
 }

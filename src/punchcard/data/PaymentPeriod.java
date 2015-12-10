@@ -19,6 +19,7 @@
 package punchcard.data;
 
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class PaymentPeriod {
@@ -65,27 +66,13 @@ public class PaymentPeriod {
 		insertWorkday(day);
 	}
 	
+	/**
+	 * Add a workday to the list, and then sort it so the list is in chronological order.
+	 * @param day Workday to add.
+	 */
 	private void insertWorkday(Workday day) {
-		boolean DEBUG = true;
-		
-		if (workdays.size() == 0) {
-			workdays.add(day);
-			return;
-		}
-		
-		for (int i = 0; i < workdays.size(); i++) {
-			if (DEBUG) {
-				System.out.println("Comparing:\n\t" 
-						+ "time to insert: " + day.getBegin().getTimeInMillis() + "\n\t"
-						+ "time comparing: " + workdays.get(i).getBegin().getTimeInMillis());
-			}
-			
-			if (day.getBegin().after(workdays.get(i))) {
-				workdays.add(i, day);
-			} else {
-				break;
-			}
-		}
+		workdays.add(day);
+		Collections.sort(workdays);
 	}
 
 	/**
