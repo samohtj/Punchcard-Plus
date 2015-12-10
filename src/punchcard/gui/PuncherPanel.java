@@ -32,7 +32,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import punchcard.Workday;
+
+import punchcard.data.Workday;
 
 /**
  * Panel containing the punch in / punch out buttons, and a list of workdays in this payment period.
