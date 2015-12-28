@@ -1,5 +1,6 @@
 /*
- * Punchcard-Plus tracks time spent working by multiple users.
+ * Punchcard Plus
+ * A timekeeping program for employers and emplyees. Mostly just a fun project.
  * Copyright (C) 2015 Jonathan Thomas
  *
  * This program is free software: you can redistribute it and/or modify

@@ -1,3 +1,22 @@
+/*
+ * Punchcard Plus
+ * A timekeeping program for employers and emplyees. Mostly just a fun project.
+ * Copyright (C) 2015 Jonathan Thomas
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package punchcard.data;
 
 import java.io.File;
@@ -10,17 +29,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserDatabase implements Serializable {
-	
+
 	private static final long serialVersionUID = 5162598507212097174L;
-	
+
 	private static final String dbLocation = "/data/userdb.dat";
-	
+
 	private ArrayList<UserProfile> users = new ArrayList<>();
-	
+
 	public UserDatabase() {
-		
+
 	}
-	
+
 	/**
 	 * Create a new user profile database from the given list of users.
 	 * @param users List of users to add.
@@ -30,7 +49,7 @@ public class UserDatabase implements Serializable {
 			this.users.add(user);
 		}
 	}
-	
+
 	/**
 	 * Add a user to the list.
 	 * @param user UserProfile to add.
@@ -38,7 +57,7 @@ public class UserDatabase implements Serializable {
 	public void addUser(UserProfile user) {
 		users.add(user);
 	}
-	
+
 	/**
 	 * Return an ArrayList containing all the users in the database.
 	 * @return ArrayList containing users.
@@ -48,7 +67,7 @@ public class UserDatabase implements Serializable {
 		for (UserProfile user: users) {
 			toReturn.add(user);
 		}
-		
+
 		return toReturn;
 	}
 
@@ -69,7 +88,7 @@ public class UserDatabase implements Serializable {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Load a UserDatabase object from a file.
 	 * @return A new UserDatabase object.
@@ -88,7 +107,7 @@ public class UserDatabase implements Serializable {
 			if (toReturn == null) {
 				toReturn = new UserDatabase();
 			}
-			
+
 		}
 		return toReturn;
 	}
