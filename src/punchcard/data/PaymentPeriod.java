@@ -144,11 +144,11 @@ public class PaymentPeriod implements Serializable {
 	public static void main(String[] args) {
 		try {
 			System.out.println("Adding workdays, please wait.");
-			Workday day1 = new Workday(Calendar.getInstance(), Calendar.getInstance());
+			Workday day1 = new Workday(new UserProfile(), Calendar.getInstance(), Calendar.getInstance());
 			Thread.sleep(2000);
-			Workday day2 = new Workday(Calendar.getInstance(), Calendar.getInstance());
+			Workday day2 = new Workday(new UserProfile(), Calendar.getInstance(), Calendar.getInstance());
 			Thread.sleep(2000);
-			Workday day3 = new Workday(Calendar.getInstance(), Calendar.getInstance());
+			Workday day3 = new Workday(new UserProfile(), Calendar.getInstance(), Calendar.getInstance());
 			System.out.println("Done adding workdays.");
 			
 			PaymentPeriod period = new PaymentPeriod();

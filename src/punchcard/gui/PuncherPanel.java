@@ -27,6 +27,9 @@ import java.util.Calendar;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import punchcard.data.Password;
+import punchcard.data.UserProfile;
 import punchcard.data.Workday;
 
 /**
@@ -42,13 +45,15 @@ public class PuncherPanel extends JPanel {
 	
 	WorkdayTablePane tablePane = new WorkdayTablePane();	
 	Workday workdayStaging = null;
+	UserProfile activeUser = new UserProfile();
 	
 	private boolean punchedIn = false;
 	
 	/**
 	 * Create a new PuncherPanel.
 	 */
-	public PuncherPanel() {
+	public PuncherPanel(UserProfile user) {
+		this.activeUser = user;
 		this.setLayout(new BorderLayout());
 		
 		JPanel buttonsPanel = new JPanel();
@@ -92,8 +97,7 @@ public class PuncherPanel extends JPanel {
 			punchedIn = true;
 			
 			// Create a new workday, with right now as the starting point
-			workdayStaging = new Workday();
-			workdayStaging.setBegin(Calendar.getInstance());
+			workdayStaging = new Workday(activeUser, Calendar.getInstance());
 		}
 	}
 	
@@ -127,7 +131,7 @@ public class PuncherPanel extends JPanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		
-		frame.add(new PuncherPanel());
+		frame.add(new PuncherPanel(new UserProfile("Jimmy Johnson", new Password("securepassword"))));
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.pack();

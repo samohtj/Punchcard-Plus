@@ -21,12 +21,15 @@ package punchcard.gui;
 
 import javax.swing.JFrame;
 
+import punchcard.data.Password;
+import punchcard.data.UserProfile;
+
 public class PunchcardPlus extends JFrame {
 	
 	private static final long serialVersionUID = -6547043843646536562L;
 
 	public PunchcardPlus() {
-		this.add(new PuncherPanel());
+		this.add(new PuncherPanel(new UserProfile("Jimmy Johnson", new Password("securepassword"))));
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.pack();

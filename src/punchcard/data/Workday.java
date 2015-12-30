@@ -33,15 +33,28 @@ public class Workday implements Comparable<Workday>, Serializable {
 	
 	private Calendar begin;
 	private Calendar end;
+	private UserProfile user;
 	
 	/**
-	 * Create a new Workday with the given beginning and ending times.
+	 * Create a new Workday with the given beginning and ending times, and the specified user.
+	 * @param user User doing the work.
 	 * @param begin Time the workday started.
 	 * @param end Time the workday ended.
 	 */
-	public Workday(Calendar begin, Calendar end) {
+	public Workday(UserProfile user, Calendar begin, Calendar end) {
+		this.user = user;
 		this.begin = begin;
 		this.end = end;
+	}
+	
+	/**
+	 * Create a new Workday with the given user and begin time.
+	 * @param user User who is doing the work.
+	 * @param begin Time the workday started.
+	 */
+	public Workday(UserProfile user, Calendar begin) {
+		this.user = user;
+		this.begin = begin;
 	}
 	
 	/**
@@ -98,7 +111,7 @@ public class Workday implements Comparable<Workday>, Serializable {
 	 * Create an exact copy of this object.
 	 */
 	public Workday clone() {
-		return new Workday(this.begin, this.end);
+		return new Workday(this.user, this.begin, this.end);
 	}
 
 	/**

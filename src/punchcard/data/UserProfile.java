@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class UserProfile implements Serializable {
 	private static final long serialVersionUID = -4938056830808518961L;
 
-	private String username;
+	private String username = "<no username>";
 	private Password password;
 
 	private ArrayList<PaymentPeriod> periods;
