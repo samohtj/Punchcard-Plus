@@ -28,7 +28,7 @@ public class UserProfile implements Serializable {
 	private String username = "<no username>";
 	private Password password;
 
-	private ArrayList<PaymentPeriod> periods;
+	private ArrayList<PaymentPeriod> periods = new ArrayList<>();
 
 	public UserProfile() {
 

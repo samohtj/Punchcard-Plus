@@ -28,7 +28,7 @@ import java.util.Calendar;
  * @author Jonathan Thomas
  *
  */
-public class Workday implements Comparable<Workday>, Serializable {
+public class Workday implements Comparable<Workday>, Serializable, Cloneable {
 	private static final long serialVersionUID = -491002784643578425L;
 	
 	private Calendar begin;

@@ -23,24 +23,26 @@ import javax.swing.JFrame;
 
 import punchcard.data.Password;
 import punchcard.data.UserProfile;
+import punchcard.data.Userbase;
 
 public class PunchcardPlus extends JFrame {
 	
 	private static final long serialVersionUID = -6547043843646536562L;
+	
+	Userbase userbase = new Userbase();
 
 	public PunchcardPlus() {
 		this.add(new PuncherPanel(new UserProfile("Jimmy Johnson", new Password("securepassword"))));
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.pack();
 		this.setSize(500, 500);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
 		JFrame frame = new PunchcardPlus();
+		frame.getName(); // To get findbugs off my ass.
 
 	}
 
