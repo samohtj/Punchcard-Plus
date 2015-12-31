@@ -25,6 +25,11 @@ import punchcard.data.Password;
 import punchcard.data.UserProfile;
 import punchcard.data.Userbase;
 
+/**
+ * The main entry point of the program. Creates a JFrame with all the program contents.
+ * @author Jonathan Thomas
+ *
+ */
 public class PunchcardPlus extends JFrame {
 	
 	private static final long serialVersionUID = -6547043843646536562L;

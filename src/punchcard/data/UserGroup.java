@@ -23,7 +23,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * 
+ * A groupd of UserProfiles. Users can be added and removed, and the whole group can be serialized 
+ * to a file. The group has a name, which can't be edited once the object is created.
  * @author Jonathan Thomas
  *
  */
@@ -33,10 +34,19 @@ public class UserGroup implements Serializable {
 	private ArrayList<UserProfile> users = new ArrayList<>();
 	private String name = "";
 	
+	/**
+	 * Create a new group with the given name.
+	 * @param name Name to use.
+	 */
 	public UserGroup(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * Create a new user group with the given name and set of users.
+	 * @param name Name of the group.
+	 * @param users ArrayList of user profiles to add.
+	 */
 	public UserGroup(String name, ArrayList<UserProfile> users) {
 		this.name = name;
 		

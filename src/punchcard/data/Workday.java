@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 /**
  * The Workday class stores a continuous instance of work, with a defined start and end time.
- * The beginning and end times can be retured as Date objects.
+ * The beginning and end times can be returned as Date objects.
  * @author Jonathan Thomas
  *
  */

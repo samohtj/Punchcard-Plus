@@ -30,6 +30,12 @@ import javax.swing.table.AbstractTableModel;
 
 import punchcard.data.Workday;
 
+/**
+ * Container class for a JScrollPane containing a list of workdays. The scrollpane can be accessed
+ * via the {@code getPane()} method.
+ * @author Jonathan Thomas
+ *
+ */
 public class WorkdayTablePane {
 
 	JTable tblWorkdays;

@@ -21,6 +21,13 @@ package punchcard.data;
 
 import java.io.Serializable;
 
+/**
+ * A simple password management class.
+ * <b>THIS CLASS IS NOT SAFE BY ANY MEASURE</b>. I don't use any of the best practices or anything,
+ * this is just the best I came up with. IT IS NOT SECURE.
+ * @author Jonathan Thomas
+ *
+ */
 public class Password implements Comparable<Password>, Serializable {
 	private static final long serialVersionUID = -4089526119855291717L;
 

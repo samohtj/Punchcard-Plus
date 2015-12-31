@@ -24,6 +24,13 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.LinkedList;
 
+/**
+ * A class representing a set of workdays with a start and end date.
+ * The payment period tracks all the workdays entered by users between the start and end dates of
+ * the period. Dates can be added and removed as needed.
+ * @author Jonathan Thomas.
+ *
+ */
 public class PaymentPeriod implements Serializable {
 	private static final long serialVersionUID = -5068081420841810501L;
 	
