@@ -20,7 +20,6 @@
 package punchcard.data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * A simple user account class. Stores a username and password.
@@ -32,8 +31,6 @@ public class UserProfile implements Serializable {
 
 	private String username = "<no username>";
 	private Password password;
-
-	private ArrayList<PaymentPeriod> periods = new ArrayList<>();
 
 	public UserProfile() {
 
@@ -47,23 +44,6 @@ public class UserProfile implements Serializable {
 	public UserProfile(String username, Password password) {
 		this.setUsername(username);
 		this.setPassword(password);
-	}
-
-	/**
-	 * Add a payment period to the list.
-	 * @param period PaymentPeriod to add.
-	 */
-	public void addPaymentPeriod(PaymentPeriod period) {
-		periods.add(period);
-	}
-
-	/**
-	 * Return a copy of the list of paymentPeriods.
-	 * @return ArrayList containing all the payment periods.
-	 */
-	@SuppressWarnings("unchecked")
-	public ArrayList<PaymentPeriod> getAllPaymentPeriods() {
-		return (ArrayList<PaymentPeriod>) periods.clone();
 	}
 
 	/**
